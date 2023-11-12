@@ -12,7 +12,7 @@ resource "azurerm_linux_virtual_machine" "keycloak_rancher" {
 
   admin_ssh_key {
     username   = "ubuntu"
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = file(var.chave_ssh)
   }
 
   os_disk {

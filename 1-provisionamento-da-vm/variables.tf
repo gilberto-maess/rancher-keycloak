@@ -36,12 +36,22 @@ variable "azure_dominio" {
 }
 
 variable "letsEncrypt_email" {
-  default = "meuemail@mail.com"
+  default = "email@email.com"
   type    = string
 }
 
 variable "meu_ip" {
   default = "201.17.115.137"
+  type    = string
+}
+
+variable "chave_ssh" {
+  default = "~/.ssh/id_rsa.pub"
+  type    = string
+}
+
+variable "kube_config_path" {
+  default = "/home/gilberto/.kube/config"
   type    = string
 }
 

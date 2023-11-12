@@ -1,6 +1,6 @@
 resource "azurerm_dns_zone" "keycloak_rancher" {
   depends_on          = [azurerm_public_ip.keycloak_rancher_ip_v4]
-  name                = "ferreira.dev.br"
+  name                = "meudominio.com.br"
   resource_group_name = azurerm_resource_group.keycloak_rancher.name
   tags = {
     Environment = "Production"
