@@ -39,7 +39,7 @@ Para este artigo utilizaremos as seguintes tencnologias:
 - Azure Cloud: criaremos uma máquina virtual que será utilizada para provisionar o nosso cluster k8s.
 - Terraform: para administrar a nossa infraestrutura como código.
 
-### 0) 
+Faça o clone do repositório https://github.com/gilberto-maess/rancher-keycloak.git.
 
 ### 1) Criação de conta de serviço na Azure
 
@@ -75,7 +75,65 @@ Colete as seguintes informações ao executar o comando `az ad sp create-for-rba
 - tenant_id
 - subscription_id
 
-Com base no arquivo secrets.tfvars.example, crie um arquivo chamado 
+
+### 2) Provisionamento da VM
+
+Como foi dito anteriormente, o `Terraform` provisiona toda a nossa infraestrutura de cloud via código. Existem muitos benefícios dessa tecnologia como:
+- gerenciamento da infra estrutura de maneira declarativa
+- estado da infraestrutura represetado como código.
+- automação e orquestração
+- independência de provedor
+- modularidade
+- gestão de estado
+- integração com ferramentas de CI/CD
+- planos de ação: o terraform mostra as mudanças do que acontecerão se o código for aplicado
+- idempotência
+- segurança e conformidade.
+
+Para saber mais, acesse o link https://developer.hashicorp.com/terraform?product_intent=terraform. Nada melhor do que a documentação da própria fonte!
+
+#### 2.1) Configuração das Variáveis:
+
+Você deverá criar um arquivo chamado `secrets.tfvars` com base no arquivo `secrets.tfvars.example` para poder aplicar as variáveis coletadas após a execução do comando `az ad sp create-for-rbac`.
+
+O arquivo `secrets.tfvars` contém os segredos que utilizaremos em conjunto com o terraform para provisionar os nossos recursos na cloud da Azure.
+
+#### Importante!
+
+Altere as variáveis do arquivo varibles.tf:
+- azure_dominio: o domínio que você utilizará para testar a sua aplicação.
+- letsEncrypt_email: e-mail válido para que o Lets Encrypt possa enviar notificações de certificados ou informações importantes sobre seu serviço.
+- meu_ip: seu ip público
+
+> As variáveis acima precisam ser alteradas para que a aplicação funcione!
+
+#### 2.2) Configuraçao do Cluster Issuer
+
+Um ClusterIssuer no Kubernetes (K8s) é um recurso usado em conjunto com o Kubernetes Cert-Manager, que é uma ferramenta que facilita a automação da emissão e renovação de certificados SSL/TLS, incluindo aqueles fornecidos pelo Let's Encrypt. O ClusterIssuer é um objeto personalizado do Kubernetes que desempenha um papel importante na configuração e gerenciamento desses certificados.
+
+Acesse o arquivo 1-provisionamento-da-vm/configs/cluster-issuer.yaml e altere o valor email para o mesmo e-mail configurado na varável letsEncrypt_email em seu arquivo variables.tf
+
+#### 3.3) Levantando a Máquina
+
+Realizadas todas as configurações, execute os comandos abaixo no diretório 1-provisionamento-da-vm para checar o plano de execução:
+
+```
+terraform init
+
+terraform plan -var-file=secrets.tfvars
+```
+
+[imagem aqui]
+
+
+
+
+
+
+
+
+
+
 
 
 
